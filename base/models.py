@@ -2,7 +2,7 @@ from django.db import models
 
 
 # Create your models here.
-class Todo(models.Model):
+class Task(models.Model):
     topic = models.CharField(max_length=200)
     description = models.TextField(null=True)
     updated = models.DateTimeField(auto_now=True)

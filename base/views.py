@@ -1,10 +1,14 @@
 from django.shortcuts import render
-from . import models
+from .models import Task
 
 
 # Create your views here.
 def index(request):
-    chores = models.Todo.objects.all()
-    context = {"chores": chores}
-    return render(request, "base/main.html", context)
+    context = {}
+    return render(request, "base/index.html", context)
 
+
+def tasks(request):
+    tasks = Task.objects.all()
+    context = {"tasks": tasks}
+    return render(request, "base/tasks.html", context)

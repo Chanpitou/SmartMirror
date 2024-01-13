@@ -1,0 +1,12 @@
+{% extends 'main.html' %} {% block content %}
+<br />
+<h3>Todo List</h3>
+<hr />
+<div>
+    {% for task in tasks %}
+    <h5>{{ task.topic }}: {{ task.description }}</h5>
+    <p>{{ task.created }}</p>
+    <hr />
+    {% endfor %}
+</div>
+{% endblock content %}
