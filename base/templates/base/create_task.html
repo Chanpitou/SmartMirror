@@ -4,7 +4,6 @@
     <h3>Create a new task</h3>
     <form action="" method="POST">
         {% csrf_token %}
-
         <input
             type="text"
             class="form-control"
@@ -21,8 +20,11 @@
             placeholder="Enter Description"
             name="task-description"
         ></textarea>
-        <button type="submit" class="btn btn-primary">submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <a href="{%url 'tasks'%}">
+        <button type="submit" class="btn btn-primary">Cancel</button>
+    </a>
 </div>
 
 {% endblock content %}

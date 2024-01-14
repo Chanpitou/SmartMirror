@@ -1,20 +1,41 @@
 {% extends 'main.html' %} {% block content %}
 <br />
-
-<div class="task-container">
+<style>
+    .task-container {
+        display: grid;
+        grid-template-columns: 5fr 1fr;
+    }
+</style>
+<div>
     <div>
         <h3>Tasks</h3>
+        <hr />
         <a href="{% url 'create-task' %}">
             <button type="button" class="btn btn-outline-primary">
                 Create Task
             </button>
         </a>
+
         {% for task in tasks %}
 
         <hr />
-        <div>
-            <h5>{{ task.topic }}: {{ task.description }}</h5>
-            <p>{{ task.created }}</p>
+        <div class="task-container">
+            <div>
+                <h5>{{ task.topic }}: {{ task.description }}</h5>
+                <p>{{ task.created }}</p>
+            </div>
+            <div>
+                <a href="{% url 'update-task' task.id%}">
+                    <button type="button" class="btn btn-outline-primary">
+                        Update Task
+                    </button>
+                </a>
+                <a href="{% url 'delete-task' task.id%}">
+                    <button type="button" class="btn btn-outline-primary">
+                        Delete Task
+                    </button>
+                </a>
+            </div>
             <hr />
         </div>
         {% endfor %}
