@@ -1,12 +1,23 @@
 {% extends 'main.html' %} {% block content %}
 <br />
-<h3>Todo List</h3>
-<hr />
-<div>
-    {% for task in tasks %}
-    <h5>{{ task.topic }}: {{ task.description }}</h5>
-    <p>{{ task.created }}</p>
-    <hr />
-    {% endfor %}
+
+<div class="task-container">
+    <div>
+        <h3>Tasks</h3>
+        <a href="{% url 'create-task' %}">
+            <button type="button" class="btn btn-outline-primary">
+                Create Task
+            </button>
+        </a>
+        {% for task in tasks %}
+
+        <hr />
+        <div>
+            <h5>{{ task.topic }}: {{ task.description }}</h5>
+            <p>{{ task.created }}</p>
+            <hr />
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock content %}

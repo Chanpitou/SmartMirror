@@ -1,0 +1,28 @@
+{% extends 'main.html' %} {% block content %}
+<br />
+<div>
+    <h3>Create a new task</h3>
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        <input
+            type="text"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            placeholder="Enter Topic"
+            name="task-topic"
+        />
+
+        <textarea
+            class="form-control"
+            id="exampleTextarea"
+            rows="3"
+            placeholder="Enter Description"
+            name="task-description"
+        ></textarea>
+        <button type="submit" class="btn btn-primary">submit</button>
+    </form>
+</div>
+
+{% endblock content %}
