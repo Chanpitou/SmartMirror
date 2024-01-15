@@ -72,8 +72,9 @@ def index(request):
 # restrict user if not authenticated
 @login_required(login_url="login")
 # Rendering all task to the task page
-def tasks(request):
-    tasks = Task.objects.all()
+def tasks(request, pk):
+    user = User.objects.get(id=pk)
+    tasks = user.task_set.all()
     context = {"tasks": tasks}
     return render(request, "base/tasks.html", context)
 
@@ -94,13 +95,13 @@ def configurationPage(request):
 @login_required(login_url="login")
 # Creating new tasks
 def createTask(request):
-    # form = TaskForm()
     if request.method == "POST":
         Task.objects.create(
+            user=request.user,
             topic=request.POST.get("task-topic"),
             description=request.POST.get("task-description"),
         )
-        return redirect("tasks")
+        return redirect("tasks", pk=request.user.id)
 
     context = {}
     return render(request, "base/create_task.html", context)
@@ -116,7 +117,7 @@ def updateTask(request, pk):
         task.topic = request.POST.get("topic")
         task.description = request.POST.get("description")
         task.save()
-        return redirect("tasks")
+        return redirect("tasks", pk=request.user.id)
     context = {"form": form}
     return render(request, "base/update_task.html", context)
 
@@ -128,6 +129,6 @@ def deleteTask(request, pk):
     task = Task.objects.get(id=pk)
     if request.method == "POST":
         task.delete()
-        return redirect("tasks")
+        return redirect("user", pk=request.user.id)
     context = {"obj": task}
     return render(request, "base/delete_task.html", context)
