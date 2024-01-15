@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 
 
 # Create User login
@@ -68,6 +69,8 @@ def index(request):
     return render(request, "base/index.html", context)
 
 
+# restrict user if not authenticated
+@login_required(login_url="login")
 # Rendering all task to the task page
 def tasks(request):
     tasks = Task.objects.all()
@@ -75,10 +78,20 @@ def tasks(request):
     return render(request, "base/tasks.html", context)
 
 
+# navbar -- about page
 def aboutPage(request):
     return render(request, "base/about.html")
 
 
+# restrict user if not authenticated
+@login_required(login_url="login")
+# Mirror configuration
+def configurationPage(request):
+    return render(request, "base/configuration.html")
+
+
+# restrict user if not authenticated
+@login_required(login_url="login")
 # Creating new tasks
 def createTask(request):
     # form = TaskForm()
@@ -93,6 +106,8 @@ def createTask(request):
     return render(request, "base/create_task.html", context)
 
 
+# restrict user if not authenticated
+@login_required(login_url="login")
 # Update task
 def updateTask(request, pk):
     task = Task.objects.get(id=pk)
@@ -106,6 +121,8 @@ def updateTask(request, pk):
     return render(request, "base/update_task.html", context)
 
 
+# restrict user if not authenticated
+@login_required(login_url="login")
 # Delete task
 def deleteTask(request, pk):
     task = Task.objects.get(id=pk)
