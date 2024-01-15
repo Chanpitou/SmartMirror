@@ -1,6 +1,65 @@
 from django.shortcuts import render, redirect
 from .models import Task
-from .forms import TaskForm
+from .forms import TaskForm, UserForm
+
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+
+
+# Create User login
+def loginPage(request):
+    page = "login"
+
+    if request.user.is_authenticated:
+        return redirect("home")
+
+    # get inputed username and password
+    if request.method == "POST":
+        username = request.POST.get("username").lower()
+        password = request.POST.get("password")
+
+        # check if the inputed user exist, otherwise throw out a flash error
+        try:
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request, "User does not exist.")
+
+        # use username and password to authenticate, then login the user
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("home")
+        else:
+            messages.error(request, "Username or password does not match.")
+    context = {"page": page}
+    return render(request, "base/login_register.html", context)
+
+
+# Create logout user
+def logoutUser(request):
+    logout(request)
+    return redirect("home")
+
+
+# Register user
+def registerPage(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            return redirect("home")
+        else:
+            messages.error(request, "An error occured during registeration.")
+
+    context = {"form": form}
+    return render(request, "base/login_register.html", context)
 
 
 # Create your views here.
@@ -14,6 +73,10 @@ def tasks(request):
     tasks = Task.objects.all()
     context = {"tasks": tasks}
     return render(request, "base/tasks.html", context)
+
+
+def aboutPage(request):
+    return render(request, "base/about.html")
 
 
 # Creating new tasks
