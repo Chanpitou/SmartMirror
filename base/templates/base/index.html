@@ -4,6 +4,8 @@
 <hr />
 {% if request.user.is_authenticated %}
 <h3>Hello, {{user.username.upper}}!</h3>
+<span>User id: {{ request.user.id }}</span>
 {% else %}
 <h3>Welcome!</h3>
+
 {% endif %} {% endblock content %}
