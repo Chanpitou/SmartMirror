@@ -2,9 +2,11 @@
 
 <a href="/admin/" target="_blank">Go to Admin page.</a>
 <hr />
+<!-- If logged in, showed this -->
 {% if request.user.is_authenticated %}
 <h3>Hello, {{user.username.upper}}!</h3>
-<span>User id: {{ request.user.id }}</span>
+<span>User ID: {{ request.user.id }}</span>
+<!-- if not logged in, showed this -->
 {% else %}
 <h3>Welcome!</h3>
 
