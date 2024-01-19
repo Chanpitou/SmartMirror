@@ -12,5 +12,5 @@ urlpatterns = [
     path("deletetask/<str:pk>/", views.deleteTask, name="delete-task"),
     path("about/", views.aboutPage, name="about"),
     path("configuration/", views.configurationPage, name="configuration"),
-    # path("updatelocation/<str:pk>/", views.location, name="updatelocation"),
+    path("location/", views.updateLocation, name="location"),
 ]

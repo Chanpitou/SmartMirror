@@ -17,11 +17,15 @@
 <form action="" method="POST">
     {% csrf_token %}
     <div>
-        <input type="text" name="city_name" placeholder="Update/Change City" />
+        <button><a href="{% url 'location' %}"> Update Location </a></button>
     </div>
 </form>
 <br />
 
 <p><strong>Current Location:</strong> {{response.name}}</p>
-<p>{{wind}}</p>
+
+<p><strong>Temperature: </strong>{{response.main.temp}} K</p>
+<p><strong>Feels Like: </strong>{{response.main.feels_like}} K</p>
+<p><strong>Wind: </strong>{{wind}}</p>
+<p><strong>.....</strong>{{response}}</p>
 {% endblock content %}

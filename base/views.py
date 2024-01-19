@@ -86,17 +86,17 @@ def aboutPage(request):
     return render(request, "base/about.html")
 
 
-# Updating user location
-def location(request, pk):
-    weather = Weather.objects.get(id=pk)
+def updateLocation(request):
     user = request.user
     if request.method == "POST":
-        userLocation, created = Weather.objects.get_or_created(user=user)
-        weather.location = request.POST.get("user_location")
+        input_location = request.POST.get("user_location")
+        loc, created = Weather.objects.get_or_create(user=user)
+        if loc is not None:
+            loc.location = input_location
+            loc.save()
+            return redirect("home")
 
-        return redirect("configuration", pk=request.user.id)
-    context = {}
-    return render(request, "base/update_city.html", context)
+    return render(request, "base/location.html")
 
 
 # restrict user if not authenticated
@@ -106,22 +106,25 @@ def configurationPage(request):
     # Fetching/displaying Weather API
     response = ""
     wind = ""
+    CITY = ""
     user = request.user
-
+    task = Task.objects.filter(user=user).values_list("topic", flat=True).first()
     WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?"
     API_KEY = "5321674b7863f1cae6a2dcda7ab0322d"
-    if request.method == "POST":
-        CITY = request.POST.get("city_name")
-        try:
-            url = WEATHER_URL + "appid=" + API_KEY + "&q=" + CITY
-            response = requests.get(url).json()
-            wind = response["wind"]
-        except:
-            messages.error(request, "City not found, please check/update again.")
+
+    CITY = Weather.objects.filter(user=user).values_list("location", flat=True).first()
+
+    try:
+        url = WEATHER_URL + "appid=" + API_KEY + "&q=" + CITY
+        response = requests.get(url).json()
+        wind = response["wind"]
+    except:
+        messages.error(request, "City not found, please check/update again.")
 
     context = {
         "response": response,
         "wind": wind,
+        "CITY": CITY,
     }
     return render(request, "base/configuration.html", context)
 
