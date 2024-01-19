@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Task
+from .models import Task, Weather
 from .forms import TaskForm, UserForm
 
 from django.contrib import messages
@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+
+import requests
 
 
 # Create User login
@@ -84,11 +86,44 @@ def aboutPage(request):
     return render(request, "base/about.html")
 
 
+# Updating user location
+def location(request, pk):
+    weather = Weather.objects.get(id=pk)
+    user = request.user
+    if request.method == "POST":
+        userLocation, created = Weather.objects.get_or_created(user=user)
+        weather.location = request.POST.get("user_location")
+
+        return redirect("configuration", pk=request.user.id)
+    context = {}
+    return render(request, "base/update_city.html", context)
+
+
 # restrict user if not authenticated
 @login_required(login_url="login")
 # Mirror configuration
 def configurationPage(request):
-    return render(request, "base/configuration.html")
+    # Fetching/displaying Weather API
+    response = ""
+    wind = ""
+    user = request.user
+
+    WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?"
+    API_KEY = "5321674b7863f1cae6a2dcda7ab0322d"
+    if request.method == "POST":
+        CITY = request.POST.get("city_name")
+        try:
+            url = WEATHER_URL + "appid=" + API_KEY + "&q=" + CITY
+            response = requests.get(url).json()
+            wind = response["wind"]
+        except:
+            messages.error(request, "City not found, please check/update again.")
+
+    context = {
+        "response": response,
+        "wind": wind,
+    }
+    return render(request, "base/configuration.html", context)
 
 
 # restrict user if not authenticated

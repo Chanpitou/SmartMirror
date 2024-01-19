@@ -1,0 +1,23 @@
+{% extends 'main.html' %} {% block content %}
+<div>
+    <h3>Updating Location</h3>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input
+            type="text"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            placeholder="Enter Location"
+            name="user_location"
+        />
+
+        <a href="{{request.META.HTTP_REFERER}}">
+            <button type="button" class="btn btn-outline-secondary">
+                Cancel
+            </button>
+        </a>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock content %}
