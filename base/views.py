@@ -108,7 +108,6 @@ def configurationPage(request):
     wind = ""
     CITY = ""
     user = request.user
-    location = user.weather_set.values_list("location", flat=True).first()
 
     WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?"
     API_KEY = "5321674b7863f1cae6a2dcda7ab0322d"
@@ -125,7 +124,6 @@ def configurationPage(request):
     context = {
         "response": response,
         "wind": wind,
-        "location": location,
     }
     return render(request, "base/configuration.html", context)
 
