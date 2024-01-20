@@ -16,7 +16,7 @@ class Task(models.Model):
 
 # Weather database
 class Weather(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     location = models.CharField(max_length=50, default="None")
     # temperature = models.TextField(max_length=100, default="None")
     # condition = models.TextField(max_length=100, default="None")
@@ -25,4 +25,4 @@ class Weather(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.user) + ": Weather in " + str(self.city)
+        return str(self.user) + ": Weather in " + str(self.location)

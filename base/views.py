@@ -94,7 +94,7 @@ def updateLocation(request):
         if loc is not None:
             loc.location = input_location
             loc.save()
-            return redirect("home")
+            return redirect("configuration")
 
     return render(request, "base/location.html")
 
@@ -108,7 +108,8 @@ def configurationPage(request):
     wind = ""
     CITY = ""
     user = request.user
-    task = Task.objects.filter(user=user).values_list("topic", flat=True).first()
+    location = user.weather_set.values_list("location", flat=True).first()
+
     WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?"
     API_KEY = "5321674b7863f1cae6a2dcda7ab0322d"
 
@@ -124,7 +125,7 @@ def configurationPage(request):
     context = {
         "response": response,
         "wind": wind,
-        "CITY": CITY,
+        "location": location,
     }
     return render(request, "base/configuration.html", context)
 
