@@ -26,3 +26,9 @@ class Weather(models.Model):
 
     def __str__(self):
         return str(self.user) + ": Weather in " + str(self.location)
+
+
+# # News database
+# class News(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     source = models.

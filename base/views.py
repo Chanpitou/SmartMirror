@@ -86,6 +86,7 @@ def aboutPage(request):
     return render(request, "base/about.html")
 
 
+# Go to location page to update the current location
 def updateLocation(request):
     user = request.user
     if request.method == "POST":
@@ -99,6 +100,17 @@ def updateLocation(request):
     return render(request, "base/location.html")
 
 
+# Go to News page to change the source or topic
+def updateNews(request):
+    user = request.user
+    if request.method == "POST":
+        news_source = request.POST.get("news_source")
+        news_topic = request.POST.get("news_topic")
+
+    context = {}
+    return render(request, "base/news.html", context)
+
+
 # restrict user if not authenticated
 @login_required(login_url="login")
 # Mirror configuration
@@ -110,12 +122,12 @@ def configurationPage(request):
     user = request.user
 
     WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?"
-    API_KEY = "5321674b7863f1cae6a2dcda7ab0322d"
+    Weather_API_KEY = "5321674b7863f1cae6a2dcda7ab0322d"
 
     CITY = Weather.objects.filter(user=user).values_list("location", flat=True).first()
 
     try:
-        url = WEATHER_URL + "appid=" + API_KEY + "&q=" + CITY
+        url = WEATHER_URL + "appid=" + Weather_API_KEY + "&q=" + CITY
         response = requests.get(url).json()
         wind = response["wind"]
     except:

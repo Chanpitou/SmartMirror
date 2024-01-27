@@ -13,4 +13,5 @@ urlpatterns = [
     path("about/", views.aboutPage, name="about"),
     path("configuration/", views.configurationPage, name="configuration"),
     path("location/", views.updateLocation, name="location"),
+    path("news/", views.updateNews, name="news"),
 ]

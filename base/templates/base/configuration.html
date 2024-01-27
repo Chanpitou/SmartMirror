@@ -28,4 +28,14 @@
 <p><strong>Feels Like: </strong>{{response.main.feels_like}} K</p>
 <p><strong>Wind: </strong>{{wind}}</p>
 <p><strong>.....</strong>{{response}}</p>
+
+<h3>News</h3>
+<form action="" method="POST">
+    {% csrf_token %}
+    <div>
+        <button>
+            <a href="{% url 'news' %}"> Update News source/topic </a>
+        </button>
+    </div>
+</form>
 {% endblock content %}
