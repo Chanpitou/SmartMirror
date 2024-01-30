@@ -5,12 +5,15 @@
         {% csrf_token %}
 
         <label for="exampleSelect1" class="form-label mt-4">News Source</label>
-        <select class="form-select" id="exampleSelect1" name="news_source">
-            <option>BBC News</option>
-            <option>option2</option>
-            <option>option3</option>
-            <option>option4</option>
-            <option>option5</option>
+        <select
+            class="form-select"
+            id="exampleSelect1"
+            name="news_source"
+            style="width: 300px"
+        >
+            {% for source in news_sources %}
+            <option>{{source}}</option>
+            {% endfor %}
         </select>
         <label for="exampleSelect1" class="form-label mt-4">News Topic</label>
         <input
@@ -20,7 +23,9 @@
             aria-describedby="emailHelp"
             placeholder="Enter News topic"
             name="news_topic"
+            style="width: 500px"
         />
+        <hr />
         <a href="{{request.META.HTTP_REFERER}}">
             <button type="button" class="btn btn-outline-secondary">
                 Cancel

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Task, Weather
+from .models import Task, Weather, News
 from .forms import TaskForm, UserForm
 
 from django.contrib import messages
@@ -102,12 +102,27 @@ def updateLocation(request):
 
 # Go to News page to change the source or topic
 def updateNews(request):
+    news_sources = [
+        "BBC News",
+        "FOX News",
+        "CNN News",
+        "New York Times News",
+    ]
     user = request.user
+
     if request.method == "POST":
         news_source = request.POST.get("news_source")
         news_topic = request.POST.get("news_topic")
 
-    context = {}
+        # retrieve or create an News instance for user
+        news_instance, created = News.objects.get_or_create(user=request.user)
+
+        if news_instance is not None:
+            news_instance.source = news_source
+            news_instance.topic = news_topic
+            news_instance.save()
+            return redirect("configuration")
+    context = {"news_sources": news_sources}
     return render(request, "base/news.html", context)
 
 
@@ -115,6 +130,7 @@ def updateNews(request):
 @login_required(login_url="login")
 # Mirror configuration
 def configurationPage(request):
+    # Weather Section
     # Fetching/displaying Weather API
     response = ""
     wind = ""
@@ -133,9 +149,19 @@ def configurationPage(request):
     except:
         messages.error(request, "City not found, please check/update again.")
 
+    # News section
+    news_source = (
+        News.objects.filter(user=request.user).values_list("source", flat=True).first()
+    )
+    news_topic = (
+        News.objects.filter(user=request.user).values_list("topic", flat=True).first()
+    )
+
     context = {
         "response": response,
         "wind": wind,
+        "news_source": news_source,
+        "news_topic": news_topic,
     }
     return render(request, "base/configuration.html", context)
 

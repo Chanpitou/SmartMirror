@@ -13,6 +13,7 @@
 <p>.....</p>
 <hr />
 
+<!-- Weather Section -->
 <h3>Weather</h3>
 <form action="" method="POST">
     {% csrf_token %}
@@ -29,6 +30,7 @@
 <p><strong>Wind: </strong>{{wind}}</p>
 <p><strong>.....</strong>{{response}}</p>
 
+<!-- News Section -->
 <h3>News</h3>
 <form action="" method="POST">
     {% csrf_token %}
@@ -38,4 +40,6 @@
         </button>
     </div>
 </form>
+<p><strong>Source: </strong>{{ news_source }}</p>
+<p><strong>Topic: </strong>{{ news_topic }}</p>
 {% endblock content %}
