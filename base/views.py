@@ -103,10 +103,13 @@ def updateLocation(request):
 # Go to News page to change the source or topic
 def updateNews(request):
     news_sources = [
-        "BBC News",
-        "FOX News",
+        "BBC",
         "CNN News",
-        "New York Times News",
+        "NBC News",
+        "ABC News",
+        "The Washington Post",
+        "ESPN",
+        "Associated Press",
     ]
     user = request.user
 

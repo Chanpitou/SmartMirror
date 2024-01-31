@@ -1,4 +1,6 @@
 from pathlib import Path
+from .config import Settings
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -65,12 +67,12 @@ WSGI_APPLICATION = "smartmirror.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "SmartMirror",
-        "USER": "postgres",
-        "PASSWORD": "Silver123Poet",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "ENGINE": Settings().DB_ENGINE,
+        "NAME": Settings().DB_NAME,
+        "USER": Settings().DB_USER,
+        "PASSWORD": Settings().DB_PASSWORD,
+        "HOST": Settings().DB_HOST,
+        "PORT": Settings().DB_PORT,
     }
 }
 

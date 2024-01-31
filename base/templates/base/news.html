@@ -9,7 +9,7 @@
             class="form-select"
             id="exampleSelect1"
             name="news_source"
-            style="width: 300px"
+            style="width: 300px; margin-left: 10px"
         >
             {% for source in news_sources %}
             <option>{{source}}</option>
@@ -23,7 +23,7 @@
             aria-describedby="emailHelp"
             placeholder="Enter News topic"
             name="news_topic"
-            style="width: 500px"
+            style="width: 500px; margin-left: 10px"
         />
         <hr />
         <a href="{{request.META.HTTP_REFERER}}">

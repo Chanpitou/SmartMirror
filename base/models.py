@@ -34,13 +34,16 @@ class News(models.Model):
     NEW_SOURCE = [
         # data, displayed readable source in dropdown
         ("bbc_news", "BBC News"),
-        ("fox_news", "FOX News"),
-        ("cnn_news", "CNN News"),
-        ("new_york_times_news", "New York Times News"),
+        ("cnn", "CNN News"),
+        ("nbc_news", "NBC News"),
+        ("abc_news", "ABC News"),
+        ("the-washington-post", "The Washington Post"),
+        ("espn", "ESPN"),
+        ("associated-press", "Associated Press"),
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     source = models.CharField(max_length=50, choices=NEW_SOURCE)
-    topic = models.TextField(max_length=100, default="everything")
+    topic = models.TextField(max_length=100, default="general")
 
     def __str__(self):
         return str(self.user) + ": " + self.source + ", " + self.topic
