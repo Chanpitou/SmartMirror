@@ -1,17 +1,29 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 # Task database
-class Task(models.Model):
+class Event(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     topic = models.CharField(max_length=200, null=False)
-    description = models.TextField(null=True)
+    description = models.TextField(null=True, blank=True)
+    event_date = models.DateTimeField(null=False, default=timezone.now)
+    start_time = models.TimeField(null=True)
+    end_time = models.TimeField(null=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.topic) + ": " + str(self.description[0:500])
+        return (
+            str(self.topic)
+            + ": "
+            + str(self.event_date)
+            + "/ "
+            + str(self.start_time)
+            + " to "
+            + str(self.end_time)
+        )
 
 
 # Weather database

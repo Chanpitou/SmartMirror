@@ -1,0 +1,45 @@
+{% extends 'main.html' %} {% block content %}
+<br />
+<style>
+    .task-container {
+        display: grid;
+        grid-template-columns: 5fr 1fr;
+    }
+</style>
+<div>
+    <div>
+        <h3>Events</h3>
+        <hr />
+        <a href="{% url 'create-event' %}">
+            <button type="button" class="btn btn-outline-primary">
+                Create Task
+            </button>
+        </a>
+        <hr />
+        <h5>pending events!</h5>
+        <hr />
+        <div>
+            {% for event in events %}
+            <tr>
+                <th scope="row">
+                    <h5>{{ event.topic }}: {{ event.event_date }}</h5>
+                    <small>{{ event.created|timesince }}</small>
+
+                    <a href="#">
+                        <button type="button" class="btn btn-outline-primary">
+                            Update Task
+                        </button>
+                    </a>
+
+                    <a href="#">
+                        <button type="button" class="btn btn-outline-primary">
+                            Delete Task
+                        </button>
+                    </a>
+                </th>
+            </tr>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

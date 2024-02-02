@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Task, Weather, News
-from .forms import TaskForm, UserForm
+from .models import Event, Weather, News
+from .forms import EventForm, UserForm
 
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -69,16 +69,6 @@ def registerPage(request):
 def index(request):
     context = {}
     return render(request, "base/index.html", context)
-
-
-# restrict user if not authenticated
-@login_required(login_url="login")
-# Rendering all task to the task page
-def tasks(request, pk):
-    user = User.objects.get(id=pk)
-    tasks = user.task_set.all()
-    context = {"tasks": tasks}
-    return render(request, "base/tasks.html", context)
 
 
 # navbar -- about page
@@ -171,42 +161,80 @@ def configurationPage(request):
 
 # restrict user if not authenticated
 @login_required(login_url="login")
-# Creating new tasks
-def createTask(request):
-    if request.method == "POST":
-        Task.objects.create(
-            user=request.user,
-            topic=request.POST.get("task-topic"),
-            description=request.POST.get("task-description"),
-        )
-        return redirect("tasks", pk=request.user.id)
-
-    context = {}
-    return render(request, "base/create_task.html", context)
+# Rendering all task to the task page
+def event(request, pk):
+    user = User.objects.get(id=pk)
+    events = user.event_set.all()
+    context = {"events": events}
+    return render(request, "base/events.html", context)
 
 
 # restrict user if not authenticated
 @login_required(login_url="login")
-# Update task
-def updateTask(request, pk):
-    task = Task.objects.get(id=pk)
-    form = TaskForm(instance=task)
+# Creating new events
+def createEvent(request):
+    form = EventForm()
     if request.method == "POST":
-        task.topic = request.POST.get("topic")
-        task.description = request.POST.get("description")
-        task.save()
-        return redirect("tasks", pk=request.user.id)
+        form = EventForm(request.POST)
+        if form.is_valid():
+            ev_topic = form.cleaned_data["ev_topic"]
+            ev_description = form.cleaned_data["ev_description"]
+            ev_date = form.cleaned_data["ev_date"]
+            ev_start_time = form.cleaned_data["ev_start_time"]
+            ev_end_time = form.cleaned_data["ev_end_time"]
+            try:
+                ev = Event.objects.create(
+                    user=request.user,
+                    topic=ev_topic,
+                    description=ev_description,
+                    event_date=ev_date,
+                    start_time=ev_start_time,
+                    end_time=ev_end_time,
+                )
+                return redirect("events", pk=request.user.pk)
+
+            except Exception as e:
+                print(f"Error creating event: {e}")
+
     context = {"form": form}
-    return render(request, "base/update_task.html", context)
+    return render(request, "base/create_event.html", context)
 
 
-# restrict user if not authenticated
-@login_required(login_url="login")
-# Delete task
-def deleteTask(request, pk):
-    task = Task.objects.get(id=pk)
-    if request.method == "POST":
-        task.delete()
-        return redirect("user", pk=request.user.id)
-    context = {"obj": task}
-    return render(request, "base/delete_task.html", context)
+# def createTask(request):
+#     if request.method == "POST":
+#         Task.objects.create(
+#             user=request.user,
+#             topic=request.POST.get("task-topic"),
+#             description=request.POST.get("task-description"),
+#         )
+#         return redirect("tasks", pk=request.user.id)
+
+#     context = {}
+#     return render(request, "base/create_task.html", context)
+
+
+# # restrict user if not authenticated
+# @login_required(login_url="login")
+# # Update task
+# def updateTask(request, pk):
+#     task = Task.objects.get(id=pk)
+#     form = TaskForm(instance=task)
+#     if request.method == "POST":
+#         task.topic = request.POST.get("topic")
+#         task.description = request.POST.get("description")
+#         task.save()
+#         return redirect("tasks", pk=request.user.id)
+#     context = {"form": form}
+#     return render(request, "base/update_task.html", context)
+
+
+# # restrict user if not authenticated
+# @login_required(login_url="login")
+# # Delete task
+# def deleteTask(request, pk):
+#     task = Task.objects.get(id=pk)
+#     if request.method == "POST":
+#         task.delete()
+#         return redirect("user", pk=request.user.id)
+#     context = {"obj": task}
+#     return render(request, "base/delete_task.html", context)

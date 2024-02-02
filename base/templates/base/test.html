@@ -1,0 +1,21 @@
+{% extends 'main.html' %} {% block content %}
+
+<hr />
+<h1>Testing form</h1>
+
+<div class="event-form" style="margin-left: 10px; width: 500px">
+    <div>
+        <h4>Birth Year</h4>
+        {{form.date}}
+    </div>
+
+    <div class="event-time-start" style="display: inline-block">
+        <h5>Start Time</h5>
+        {{form.time}}
+    </div>
+    <div class="event-time-start" style="display: inline-block">
+        <h5>End Time</h5>
+        {{form.time}}
+    </div>
+</div>
+{% endblock content %}
