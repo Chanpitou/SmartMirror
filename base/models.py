@@ -55,7 +55,7 @@ class News(models.Model):
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     source = models.CharField(max_length=50, choices=NEW_SOURCE)
-    topic = models.TextField(max_length=100, default="general")
+    topic = models.TextField(max_length=100, null=True)
 
     def __str__(self):
         return str(self.user) + ": " + self.source + ", " + self.topic

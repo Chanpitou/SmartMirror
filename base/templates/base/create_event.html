@@ -1,7 +1,24 @@
 {% extends 'main.html' %} {% block content %}
-<br />
 <div>
+    {% if page == "create" %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item">
+            <a href="{{request.META.HTTP_REFERER}}">Events</a>
+        </li>
+        <li class="breadcrumb-item active">Create Event</li>
+    </ol>
     <h3>Create a new event</h3>
+    {% else %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item">
+            <a href="{{request.META.HTTP_REFERER}}">Events</a>
+        </li>
+        <li class="breadcrumb-item active">Update Event</li>
+    </ol>
+    <h3>Update Event</h3>
+    {% endif %}
     <hr />
     <form action="" method="POST">
         {% csrf_token %}

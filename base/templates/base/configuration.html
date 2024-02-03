@@ -1,4 +1,8 @@
 {% extends 'main.html' %} {% block content %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item active">Configuration</li>
+</ol>
 <h1>Configuration</h1>
 <hr />
 <h3>Mirror View</h3>
@@ -41,5 +45,8 @@
     </div>
 </form>
 <p><strong>Source: </strong>{{ news_source }}</p>
+{% if news_topic != None %}
 <p><strong>Topic: </strong>{{ news_topic }}</p>
-{% endblock content %}
+{% else %}
+<p><strong>Topic: </strong>General</p>
+{% endif %} {% endblock content %}

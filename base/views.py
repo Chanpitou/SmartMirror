@@ -173,6 +173,7 @@ def event(request, pk):
 @login_required(login_url="login")
 # Creating new events
 def createEvent(request):
+    page = "create"
     form = EventForm()
     if request.method == "POST":
         form = EventForm(request.POST)
@@ -196,45 +197,53 @@ def createEvent(request):
             except Exception as e:
                 print(f"Error creating event: {e}")
 
+    context = {"form": form, "page": page}
+    return render(request, "base/create_event.html", context)
+
+
+# restrict user if not authenticated
+@login_required(login_url="login")
+# Creating new events
+def updateEvent(request, pk):
+    event = Event.objects.get(id=pk)
+    # Populate the form with initial data from the existing event
+    form = EventForm(
+        initial={
+            "ev_topic": event.topic,
+            "ev_description": event.description,
+            "ev_date": event.event_date,
+            "ev_start_time": event.start_time,
+            "ev_end_time": event.end_time,
+        }
+    )
+    # When submited
+    if request.method == "POST":
+        # Create an instance of form with the data submitted via POST request
+        form = EventForm(request.POST)
+        if form.is_valid():
+            # Update the existing event with the form data
+            event.topic = form.cleaned_data["ev_topic"]
+            event.description = form.cleaned_data["ev_description"]
+            event.event_date = form.cleaned_data["ev_date"]
+            event.start_time = form.cleaned_data["ev_start_time"]
+            event.end_time = form.cleaned_data["ev_end_time"]
+            event.save()
+            return redirect("events", pk=request.user.id)
+
     context = {"form": form}
     return render(request, "base/create_event.html", context)
 
 
-# def createTask(request):
-#     if request.method == "POST":
-#         Task.objects.create(
-#             user=request.user,
-#             topic=request.POST.get("task-topic"),
-#             description=request.POST.get("task-description"),
-#         )
-#         return redirect("tasks", pk=request.user.id)
-
-#     context = {}
-#     return render(request, "base/create_task.html", context)
-
-
-# # restrict user if not authenticated
-# @login_required(login_url="login")
-# # Update task
-# def updateTask(request, pk):
-#     task = Task.objects.get(id=pk)
-#     form = TaskForm(instance=task)
-#     if request.method == "POST":
-#         task.topic = request.POST.get("topic")
-#         task.description = request.POST.get("description")
-#         task.save()
-#         return redirect("tasks", pk=request.user.id)
-#     context = {"form": form}
-#     return render(request, "base/update_task.html", context)
-
-
-# # restrict user if not authenticated
-# @login_required(login_url="login")
-# # Delete task
-# def deleteTask(request, pk):
-#     task = Task.objects.get(id=pk)
-#     if request.method == "POST":
-#         task.delete()
-#         return redirect("user", pk=request.user.id)
-#     context = {"obj": task}
-#     return render(request, "base/delete_task.html", context)
+# restrict user if not authenticated
+@login_required(login_url="login")
+# Creating new events
+def deleteEvent(request, pk):
+    event = Event.objects.get(id=pk)
+    if request.method == "POST":
+        event.delete()
+        messages.success(
+            request, f"Event '{event.topic}' has been successfully deleted."
+        )
+        return redirect("events", pk=request.user.id)
+    context = {"obj": event.topic}
+    return render(request, "base/delete_event.html", context)

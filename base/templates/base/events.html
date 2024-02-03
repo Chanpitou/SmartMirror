@@ -1,4 +1,8 @@
 {% extends 'main.html' %} {% block content %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item active">Events</li>
+</ol>
 <br />
 <style>
     .task-container {
@@ -11,31 +15,42 @@
         <h3>Events</h3>
         <hr />
         <a href="{% url 'create-event' %}">
-            <button type="button" class="btn btn-outline-primary">
+            <button
+                type="button"
+                class="btn btn-outline-primary"
+                style="margin-left: 45%"
+            >
                 Create Task
             </button>
         </a>
         <hr />
-        <h5>pending events!</h5>
+        <h5 style="margin-left: 10px">{{ events.count }} pending events!</h5>
         <hr />
-        <div>
+        <div style="margin-left: 10px">
             {% for event in events %}
             <tr>
                 <th scope="row">
-                    <h5>{{ event.topic }}: {{ event.event_date }}</h5>
-                    <small>{{ event.created|timesince }}</small>
-
-                    <a href="#">
+                    <h5>{{ event.topic }}</h5>
+                    <h6>{{ event.event_date|date }}</h6>
+                    <!-- If there is start time and end time -->
+                    {% if event.start_time != None or event.end_time != None %}
+                    <h6>{{ event.start_time }} - {{ event.end_time }}</h6>
+                    <!-- if not, then display "All Day" -->
+                    {% else %}
+                    <h6>All Day</h6>
+                    {% endif %}
+                    <a href="{% url 'update-event' event.id%}">
                         <button type="button" class="btn btn-outline-primary">
                             Update Task
                         </button>
                     </a>
 
-                    <a href="#">
+                    <a href="{% url 'delete-event' event.id%}">
                         <button type="button" class="btn btn-outline-primary">
                             Delete Task
                         </button>
                     </a>
+                    <hr />
                 </th>
             </tr>
             {% endfor %}

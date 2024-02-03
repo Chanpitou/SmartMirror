@@ -1,4 +1,11 @@
 {% extends 'main.html' %} {% block content %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item">
+        <a href="{{request.META.HTTP_REFERER}}">Configuration</a>
+    </li>
+    <li class="breadcrumb-item active">Location</li>
+</ol>
 <div>
     <h3>Updating Location</h3>
     <form action="" method="POST">

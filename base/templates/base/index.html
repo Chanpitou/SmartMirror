@@ -6,6 +6,7 @@
 {% if request.user.is_authenticated %}
 <h3><q>Hello, {{user.username.upper}}!</q></h3>
 <span>User ID: {{ request.user.id }}</span>
+
 <!-- if not logged in, showed this -->
 {% else %}
 <h3><q>Welcome!</q></h3>
