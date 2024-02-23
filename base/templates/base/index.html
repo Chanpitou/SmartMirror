@@ -1,14 +1,131 @@
-{% extends "main.html" %} {% block content %}
+{% extends "main.html" %} {% block content %} {% load static %}
+<style>
+    .container {
+        margin-block: 0.5vh;
+        width: 23vw;
 
-<a href="/admin/" target="_blank">Go to Admin page.</a>
-<hr />
-<!-- If logged in, showed this -->
-{% if request.user.is_authenticated %}
-<h3><q>Hello, {{user.username.upper}}!</q></h3>
-<span>User ID: {{ request.user.id }}</span>
+        overflow: hidden;
+        border: 10px solid #cdc8c8;
+        border-radius: 8px;
+        box-shadow: 10px 25px 30px rgba(30, 30, 200, 0.3);
+    }
+    .wrapper {
+        width: 100%;
+        display: flex;
+        animation: slide 15s infinite;
+    }
+    @keyframes slide {
+        0% {
+            transform: translateX(0);
+        }
+        25% {
+            transform: translateX(0);
+        }
+        30% {
+            transform: translateX(-100%);
+        }
+        50% {
+            transform: translateX(-100%);
+        }
+        55% {
+            transform: translateX(-200%);
+        }
+        75% {
+            transform: translateX(-200%);
+        }
+        80% {
+            transform: translateX(-300%);
+        }
+        100% {
+            transform: translateX(-300%);
+        }
+    }
+    img {
+        width: 100%;
+    }
+    .features {
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .landing {
+        max-height: 60vh;
+        background-image: url("{% static 'images/landing.jpg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        overflow: auto;
+    }
+</style>
 
-<!-- if not logged in, showed this -->
-{% else %}
-<h3><q>Welcome!</q></h3>
+<div class="landing">
+    <div style="display: grid; grid-template-columns: 2fr 3fr">
+        <div style="margin-left: 20%">
+            <div style="margin-top: 12%">
+                <h1><strong>Welcome to Smart Mirror</strong></h1>
+            </div>
+            <div class="text-align">
+                <p>
+                    Welcome to the future of home technology! Smart Mirror is an innovative project aimed at revolutionizing your
+                    daily routine through the power of technology. Our smart mirror seamlessly integrates into your home, offering
+                    a unique blend of functionality and style.
+                </p>
+            </div>
+            <!-- If logged in, showed this -->
+            {% if request.user.is_authenticated %}
+            <div style="margin-top: 3vh">
+                <p style="margin-bottom: 4px">To set up and personalize your own mirror:</p>
+                <a href="{% url 'configuration' %}">
+                    <button type="button" class="btn btn-outline-info">Go to Configuration</button>
+                </a>
+                <hr />
+                <p style="margin-bottom: 4px">To create, update, or delete your events:</p>
+                <a href="{% url 'events' request.user.id%}">
+                    <button type="button" class="btn btn-outline-info">Got to Events</button>
+                </a>
+            </div>
 
-{% endif %} {% endblock content %}
+            <!-- if not logged in, showed this -->
+            {% else %}
+            <div>
+                <a href="{% url 'login' %}">
+                    <button type="button" class="btn btn-outline-success">Get Started</button>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        <div class="container">
+            <div class="wrapper">
+                <img src="{% static 'images/Limage1.jpg' %}" />
+                <img src="{% static 'images/Limage2.jpg' %}" />
+                <img src="{% static 'images/Limage3.jpg' %}" />
+                <img src="{% static 'images/Limage4.jpg' %}" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center" style="margin-inline-start: 3%; margin-inline-end: 3%; margin-top: 30px"><h3>Features</h3></div>
+<div class="features" style="margin-inline-start: 3%; margin-inline-end: 3%; margin-top: 40px">
+    <div style="max-width: 20%">
+        <h5><i class="fa-solid fa-circle-user"></i><strong> Personalized Information</strong></h5>
+        <p>Our smart mirror display tailored information such as weather updates, calendar events, and news headlines.</p>
+    </div>
+    <div style="max-width: 20%">
+        <h5><i class="fa-solid fa-display"></i><strong> Customizable Interface</strong></h5>
+        <p>Easily customize your mirror's layout, widgets, and themes to match your unique style and preferences.</p>
+    </div>
+    <div style="max-width: 20%">
+        <h5><i class="fa-solid fa-microphone-lines"></i><strong> Voice Control</strong></h5>
+        <p>
+            Control your smart mirror hands-free with built-in voice recognition technology. Simply speak commands to check the
+            weather, play music, or control smart home devices.
+        </p>
+    </div>
+    <div style="max-width: 20%">
+        <h5><i class="fa-regular fa-lightbulb"></i> <strong> Motion Sensor</strong></h5>
+        <p>
+            The integrated motion sensor detects your presence, activating the mirror's display when you approach and conserving
+            energy when not in use.
+        </p>
+    </div>
+</div>
+{% endblock content %}

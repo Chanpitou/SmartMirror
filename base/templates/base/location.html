@@ -6,25 +6,30 @@
     </li>
     <li class="breadcrumb-item active">Location</li>
 </ol>
-<div>
-    <h3>Updating Location</h3>
-    <form action="" method="POST">
-        {% csrf_token %}
-        <input
-            type="text"
-            class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            placeholder="Enter Location"
-            name="user_location"
-        />
+<style>
+    .location-container {
+        height: 40vh;
+        margin-inline: 10vw;
+        margin-block: 5vh;
+    }
+</style>
+<div class="location-container">
+    <div class="card border-primary mb-3" style="max-width: 200rem">
+        <div class="card-header" style="margin-top: 10px"><h3>Updating Location</h3></div>
+        <div class="card-body">
+            <form action="" method="POST">
+                <p>
+                    Please provide a country or city as your location. For instance, you can enter 'United States' or 'Minnesota'.
+                </p>
+                {% csrf_token %} {{form.as_p}}
+                <p></p>
+                <a href="{{request.META.HTTP_REFERER}}">
+                    <button type="button" class="btn btn-outline-secondary">Cancel</button>
+                </a>
 
-        <a href="{{request.META.HTTP_REFERER}}">
-            <button type="button" class="btn btn-outline-secondary">
-                Cancel
-            </button>
-        </a>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    {% endblock content %}
 </div>
-{% endblock content %}

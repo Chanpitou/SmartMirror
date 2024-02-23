@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'home' %}">SmartMirror</a>
+        <a class="navbar-brand" href="{% url 'home' %}"><h1>SmartMirror</h1></a>
         <button
             class="navbar-toggler"
             type="button"
@@ -12,33 +12,40 @@
         >
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarColor03">
+        <div class="collapse navbar-collapse" id="navbarColor03" style="position: relative; top: 20%; transform: translateY(6%)">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'home' %}"
-                        >Home
-                        <span class="visually-hidden">(current)</span>
-                    </a>
+                    <h5>
+                        <a class="nav-link active" href="{% url 'home' %}">
+                            <i class="fa-solid fa-house"></i>
+                            Home
+                            <span class="visually-hidden">(current)</span>
+                        </a>
+                    </h5>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'configuration' %}"
-                        >Configuration</a
-                    >
+                    <h5>
+                        <a class="nav-link" href="{% url 'configuration' %}"><i class="fa-solid fa-sliders"></i> Configuration</a>
+                    </h5>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'events' request.user.id%}"
-                        >Events</a
-                    >
+                    <h5>
+                        <a class="nav-link" href="{% url 'events' request.user.id%}"
+                            ><i class="fa-regular fa-calendar-days"></i> Events</a
+                        >
+                    </h5>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                    <h5>
+                        <a class="nav-link" href="{% url 'about' %}"><i class="fa-regular fa-address-card"></i> About</a>
+                    </h5>
                 </li>
                 <!-- For development only, will be taken off later -->
-                <li class="nav-item">
-                    <a class="nav-link" href="http://127.0.0.1:8000/api/"
-                        >API</a
-                    >
-                </li>
+                <!-- <li class="nav-item">
+                    <h5>
+                        <a class="nav-link" href="http://127.0.0.1:8000/api/">API</a>
+                    </h5>
+                </li> -->
 
                 <!-- <li class="nav-item dropdown">
                     <a
@@ -64,24 +71,31 @@
                     </div>
                 </li> -->
             </ul>
-            <!-- <form class="d-flex">
-                <input
-                    class="form-control me-sm-2"
-                    type="search"
-                    placeholder="Search"
-                />
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">
-                    Search
-                </button>
-            </form> -->
-            {% if request.user.is_authenticated %}
 
+            {% if request.user.is_authenticated %}
+            <h5>
+                <i class="fa-regular fa-user" style="margin-right: 10px"></i>
+                <small style="margin-right: 30px">Hello, {{request.user.username.upper}}!</small>
+            </h5>
             <a href="{% url 'logout' %}"
-                ><button type="button" class="btn btn-link">Logout</button></a
-            >
+                ><button
+                    type="button"
+                    class="btn btn-link"
+                    style="position: relative; top: 20%; transform: translateY(-10%); margin-right: 10px"
+                >
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i></button
+            ></a>
             {% else %}
+            <i class="fa-regular fa-user" style="margin-bottom: 10px; margin-right: 10px"></i>
+            <small style="margin-right: 30px"><h5>Hello, Guest!</h5></small>
             <a href="{% url 'login' %}"
-                ><button type="button" class="btn btn-link">Login</button></a
+                ><button
+                    type="button"
+                    class="btn btn-link"
+                    style="position: relative; top: 20%; transform: translateY(-10%); margin-right: 10px"
+                >
+                    Login
+                </button></a
             >
             {% endif %}
         </div>

@@ -6,49 +6,26 @@
     </li>
     <li class="breadcrumb-item active">News</li>
 </ol>
-<div>
-    <h3>Update News source/topic</h3>
-    <form action="" method="POST">
-        {% csrf_token %}
-
-        <label
-            for="exampleSelect1"
-            class="form-label mt-4"
-            style="margin-left: 10px"
-            >News Source</label
-        >
-        <select
-            class="form-select"
-            id="exampleSelect1"
-            name="news_source"
-            style="width: 300px; margin-left: 10px"
-        >
-            {% for source in news_sources %}
-            <option>{{source}}</option>
-            {% endfor %}
-        </select>
-        <label
-            for="exampleSelect1"
-            class="form-label mt-4"
-            style="margin-left: 10px"
-            >News Topic</label
-        >
-        <input
-            type="text"
-            class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            placeholder="Enter News topic"
-            name="news_topic"
-            style="width: 500px; margin-left: 10px"
-        />
-        <hr />
-        <a href="{{request.META.HTTP_REFERER}}">
-            <button type="button" class="btn btn-outline-secondary">
-                Cancel
-            </button>
-        </a>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+<style>
+    .news-container {
+        height: 40vh;
+        margin-inline: 10vw;
+        margin-block: 5vh;
+    }
+</style>
+<div class="news-container">
+    <div class="card border-primary mb-3" style="max-width: 200rem">
+        <div class="card-header" style="margin-top: 10px"><h3>Update News source/topic</h3></div>
+        <div class="card-body">
+            <form action="" method="POST">
+                {% csrf_token %} {{form.as_p}}
+                <p></p>
+                <a href="{{request.META.HTTP_REFERER}}">
+                    <button type="button" class="btn btn-outline-secondary">Cancel</button>
+                </a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    {% endblock content %}
 </div>
-{% endblock content %}

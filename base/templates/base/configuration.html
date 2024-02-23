@@ -1,52 +1,102 @@
-{% extends 'main.html' %} {% block content %}
+{% extends 'main.html' %} {% block content %} {% load static%}
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
     <li class="breadcrumb-item active">Configuration</li>
 </ol>
-<h1>Configuration</h1>
-<hr />
-<h3>Mirror View</h3>
-<p>.....</p>
-<p>.....</p>
-<p>.....</p>
-<hr />
-
-<h3>TodoList</h3>
-<p>.....</p>
-<p>.....</p>
-<p>.....</p>
-<hr />
-
-<!-- Weather Section -->
-<h3>Weather</h3>
-<form action="" method="POST">
-    {% csrf_token %}
-    <div>
-        <button><a href="{% url 'location' %}"> Update Location </a></button>
+<div style="margin-left: 10px">
+    <h1 style="text-align: center">Configuration</h1>
+    <hr />
+    <div class="card border-primary mb-3" style="max-width: 200rem; margin-inline: 20vh">
+        <div class="card-header"><h3 style="margin-top: 10px">Mirror View</h3></div>
+        <div style="display: grid; grid-template-columns: 3fr 3fr">
+            <div class="card-body">
+                <p>
+                    Effortlessly view and update your chosen perspective or mirror with ease. Select from a variety of
+                    pre-designed options to tailor the presentation of information according to your preferences. Our
+                    user-friendly interface ensures a seamless experience as you navigate between different perspectives, allowing
+                    for efficient decision-making and analysis.
+                </p>
+                <hr />
+                <p><strong>Current Design: </strong>{{mirror_display}}</p>
+                <a href="{% url 'mirror-display' request.user.id %}"
+                    ><button style="margin: 0 auto" type="button" class="btn btn-primary">Update Design</button>
+                </a>
+            </div>
+            <div class="card-body" style="display: inline-block; margin: 0 auto">
+                <h4 class="text-center">Design View</h4>
+                <img
+                    style="
+                        width: 30vw;
+                        display: block;
+                        margin-bottom: 1.5vh;
+                        border: 10px solid #cdc8c8;
+                        border-radius: 8px;
+                        box-shadow: 10px 25px 30px rgba(30, 30, 200, 0.3);
+                    "
+                    src="{% static 'images/smart.jpg' %}"
+                />
+            </div>
+        </div>
     </div>
-</form>
-<br />
 
-<p><strong>Current Location:</strong> {{response.name}}</p>
+    <!-- Weather Section -->
+    <div class="card border-primary mb-3" style="max-width: 200rem; margin-inline: 20vh">
+        <div class="card-header"><h3 style="margin-top: 10px">Weather</h3></div>
+        <div style="display: grid; grid-template-columns: 3fr 2fr">
+            <div class="card-body">
+                <p>
+                    Simply provide your location, and gain instant access to comprehensive meteorological data, including current
+                    location, temperature, wind speed, and more.
+                </p>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div>
+                        <a href="{% url 'location' %}">
+                            <button style="margin: 0 auto" type="button" class="btn btn-primary">Update Location</button>
+                        </a>
+                    </div>
+                </form>
+            </div>
 
-<p><strong>Temperature: </strong>{{response.main.temp}} K</p>
-<p><strong>Feels Like: </strong>{{response.main.feels_like}} K</p>
-<p><strong>Wind: </strong>{{wind}}</p>
-<p><strong>.....</strong>{{response}}</p>
+            <div class="card-body">
+                <p><strong>Current Location:</strong> {{response.name}}</p>
 
-<!-- News Section -->
-<h3>News</h3>
-<form action="" method="POST">
-    {% csrf_token %}
-    <div>
-        <button>
-            <a href="{% url 'news' %}"> Update News source/topic </a>
-        </button>
+                <p><strong>Temperature: </strong>{{response.main.temp}} K</p>
+                <p><strong>Feels Like: </strong>{{response.main.feels_like}} K</p>
+                <p><strong>Wind: </strong>{{wind}}</p>
+            </div>
+        </div>
     </div>
-</form>
-<p><strong>Source: </strong>{{ news_source }}</p>
-{% if news_topic != None %}
-<p><strong>Topic: </strong>{{ news_topic }}</p>
-{% else %}
-<p><strong>Topic: </strong>General</p>
-{% endif %} {% endblock content %}
+
+    <!-- News Section -->
+    <div class="card border-primary mb-3" style="max-width: 200rem; margin-inline: 20vh">
+        <div class="card-header"><h3 style="margin-top: 10px">News</h3></div>
+        <div style="display: grid; grid-template-columns: 3fr 2fr">
+            <div class="card-body">
+                <p>
+                    Discover tailored news content with our new sections. Select your preferred news sources and topics to
+                    personalize your feed. Choose from various categories such as technology, sports, health, and entertainment to
+                    stay informed on what matters most to you.
+                </p>
+
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div>
+                        <a href="{% url 'news' %}">
+                            <button style="margin: 0 auto" type="button" class="btn btn-primary">Update News Source/Topic</button>
+                        </a>
+                    </div>
+                </form>
+            </div>
+            <div class="card-body">
+                <p><strong>Source: </strong>{{ news_source }}</p>
+                {% if news_topic != None %}
+                <p><strong>Topic: </strong>{{ news_topic }}</p>
+                {% else %}
+                <p><strong>Topic: </strong>General</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

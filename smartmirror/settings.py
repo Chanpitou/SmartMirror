@@ -39,6 +39,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_auto_logout.middleware.auto_logout",  # Django session timeout (1)
 ]
 
 ROOT_URLCONF = "smartmirror.urls"
@@ -54,6 +55,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django_auto_logout.context_processors.auto_logout_client",  # Django session timeout(2)
             ],
         },
     },
@@ -67,12 +69,12 @@ WSGI_APPLICATION = "smartmirror.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": Settings().DB_ENGINE,
-        "NAME": Settings().DB_NAME,
-        "USER": Settings().DB_USER,
-        "PASSWORD": Settings().DB_PASSWORD,
-        "HOST": Settings().DB_HOST,
-        "PORT": Settings().DB_PORT,
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "railway",
+        "USER": "postgres",
+        "PASSWORD": "b*14GGE23cbcegDcAEDa3d*cd6AC-5*-",
+        "HOST": "viaduct.proxy.rlwy.net",
+        "PORT": 15394,
     }
 }
 
@@ -119,3 +121,10 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Django Session timeout (3)
+AUTO_LOGOUT = {
+    "IDLE_TIME": 1800,  # logout after 30 minutes of downtime
+    "REDIRECT_TO_LOGIN_IMMEDIATELY": True,
+    "MESSAGE": "The session has expired. Please login again to continue.",
+}

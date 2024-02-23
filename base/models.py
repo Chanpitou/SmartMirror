@@ -9,10 +9,14 @@ class Event(models.Model):
     topic = models.CharField(max_length=200, null=False)
     description = models.TextField(null=True, blank=True)
     event_date = models.DateTimeField(null=False, default=timezone.now)
+    location = models.TextField(max_length=400, null=True)
     start_time = models.TimeField(null=True)
     end_time = models.TimeField(null=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["event_date", "start_time"]
 
     def __str__(self):
         return (
@@ -29,7 +33,7 @@ class Event(models.Model):
 # Weather database
 class Weather(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    location = models.CharField(max_length=50, default="None")
+    location = models.CharField(max_length=50, default="Minnesota")
     # temperature = models.TextField(max_length=100, default="None")
     # condition = models.TextField(max_length=100, default="None")
     # wind = models.TextField(max_length=100, default="None")
@@ -54,8 +58,25 @@ class News(models.Model):
         ("associated-press", "Associated Press"),
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    source = models.CharField(max_length=50, choices=NEW_SOURCE)
-    topic = models.TextField(max_length=100, null=True)
+    source = models.CharField(max_length=50, choices=NEW_SOURCE, default="bbc_news")
+    topic = models.TextField(max_length=100, default="Technology")
 
     def __str__(self):
         return str(self.user) + ": " + self.source + ", " + self.topic
+
+
+# Mirror Display choices
+class MirrorDisplay(models.Model):
+    DISPLAY = [
+        ("Default", "Default"),
+        ("Display 2", "Display 2"),
+        ("Display 3", "Display 3"),
+        ("Display 4", "Display 4"),
+        ("Display 5", "Display 5"),
+        ("Display 6", "Display 6"),
+    ]
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    display = models.CharField(max_length=50, choices=DISPLAY, default="default")
+
+    def __str__(self):
+        return f"{self.user.username}: {self.display}"

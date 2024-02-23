@@ -6,18 +6,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>SmartMirror</title>
         <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}" />
+        <script src="https://kit.fontawesome.com/f2d9574c9c.js" crossorigin="anonymous"></script>
+        <style>
+            p {
+                font-size: larger;
+            }
+            h {
+                font-size: large;
+            }
+        </style>
     </head>
     <body>
-        {% include 'navbar.html' %} {% if messages %}
-        <ul class="messages">
-            {% for message in messages %} {% if message.tags == 'error' %}
-            <li><p class="text-danger">{{ message }}</p></li>
-            {% elif message.tags == 'success' %}
-            <li><p class="text-success">{{ message }}</p></li>
+        {% include 'navbar.html' %} {% for message in messages %}
+        <div>
+            {% if message == "success" %}
+            <div class="message text-center alert alert-dismissible alert-success {{ message.tags }}">{{ message }}</div>
+
             {% else %}
-            <li><p>{{ message }}</p></li>
-            {% endif %} {% endfor %}
-        </ul>
-        {% endif %} {% block content %} {% endblock %}
+            <div class="message text-center alert alert-dismissible alert-warning {{ message.tags }}">{{ message }}</div>
+
+            {% endif %}
+        </div>
+        {% endfor %} {% block content %} {% endblock %}
     </body>
+    {{ redirect_to_login_immediately }}
 </html>

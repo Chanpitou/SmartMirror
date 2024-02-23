@@ -1,4 +1,5 @@
 {% extends 'main.html' %} {% block content %}
+
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
     <li class="breadcrumb-item">
@@ -6,20 +7,19 @@
     </li>
     <li class="breadcrumb-item active">Delete Event</li>
 </ol>
-<br />
-<div>
-    <form action="" method="POST">
-        {% csrf_token %}
-        <p class="text-danger-emphasis">
-            Are you certain you would like to delete "{{obj}}" ?
-        </p>
-        <a href="{{request.META.HTTP_REFERER}}">
-            <button type="button" class="btn btn-outline-secondary">
-                Cancel
-            </button>
-        </a>
-        <button type="submit" class="btn btn-outline-danger">Delete</button>
-    </form>
-</div>
 
+<div class="card border-primary mb-3" style="max-width: 40rem; text-align: center; margin: 0 auto">
+    <div class="card-header"><h3>Delete</h3></div>
+
+    <div class="card-body">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <p class="text-danger-emphasis">Are you certain you would like to delete event "{{obj}}" ?</p>
+            <a href="{{request.META.HTTP_REFERER}}">
+                <button type="button" class="btn btn-outline-secondary">Cancel</button>
+            </a>
+            <button type="submit" class="btn btn-outline-danger">Delete</button>
+        </form>
+    </div>
+</div>
 {% endblock content %}

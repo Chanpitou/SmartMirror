@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from .models import Event
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 from django import forms
 
@@ -8,20 +9,23 @@ from django import forms
 class UserForm(ModelForm):
     class Meta:
         model = User
-        fields = ["username", "email"]
+        fields = ["username", "password"]
+        widgets = {
+            "username": forms.TextInput(attrs={"class": "form-control"}),
+            "password": forms.PasswordInput(attrs={"class": "form-control"}),
+        }
 
 
-from django.forms import ModelForm
-from .models import Event
-from django.contrib.auth.models import User
-
-from django import forms
-
-
-class UserForm(ModelForm):
+class RegisterForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ["username", "email"]
+        fields = ["username", "password1", "password2"]
+
+    def __init__(self, *args, **kwargs):
+        super(RegisterForm, self).__init__(*args, **kwargs)
+        self.fields["username"].widget.attrs["class"] = "form-control"
+        self.fields["password1"].widget.attrs["class"] = "form-control"
+        self.fields["password2"].widget.attrs["class"] = "form-control"
 
 
 class EventForm(forms.Form):
@@ -54,6 +58,14 @@ class EventForm(forms.Form):
             },
         ),
     )
+    ev_location = forms.CharField(
+        label="location",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+            }
+        ),
+    )
     ev_start_time = forms.TimeField(
         required=False,
         widget=forms.TimeInput(
@@ -70,5 +82,66 @@ class EventForm(forms.Form):
                 "class": "form-control",
                 "type": "time",
             },
+        ),
+    )
+
+
+class DisplayForm(forms.Form):
+    md_display = forms.ChoiceField(
+        choices=[
+            ("Default", "Default"),
+            ("Display 2", "Display 2"),
+            ("Display 3", "Display 3"),
+            ("Display 4", "Display 4"),
+            ("Display 5", "Display 5"),
+            ("Display 6", "Display 6"),
+        ],
+        widget=forms.Select(
+            attrs={
+                "class": "form-control",
+                "style": "width: 40vw",
+            }
+        ),
+    )
+
+
+class LocationForm(forms.Form):
+    lf_location = forms.CharField(
+        label="Location",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "style": "width: 40vw",
+            }
+        ),
+    )
+
+
+class NewsForm(forms.Form):
+    nf_source = forms.ChoiceField(
+        choices=[
+            ("bbc_news", "BBC News"),
+            ("cnn", "CNN News"),
+            ("nbc_news", "NBC News"),
+            ("abc_news", "ABC News"),
+            ("the-washington-post", "The Washington Post"),
+            ("espn", "ESPN"),
+            ("associated-press", "Associated Press"),
+        ],
+        label="Sources",
+        widget=forms.Select(
+            attrs={
+                "class": "form-control",
+                "style": "width: 40vw",
+            }
+        ),
+    )
+    nf_topic = forms.CharField(
+        label="Topic",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "style": "width: 40vw",
+            }
         ),
     )
