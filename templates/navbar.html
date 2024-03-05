@@ -37,6 +37,11 @@
                 </li>
                 <li class="nav-item">
                     <h5>
+                        <a class="nav-link" href="{% url 'help' %}"> <i class="fa-solid fa-circle-info"></i> Setup</a>
+                    </h5>
+                </li>
+                <li class="nav-item">
+                    <h5>
                         <a class="nav-link" href="{% url 'about' %}"><i class="fa-regular fa-address-card"></i> About</a>
                     </h5>
                 </li>
@@ -86,7 +91,7 @@
                     <i class="fa-solid fa-arrow-right-from-bracket"></i></button
             ></a>
             {% else %}
-            <i class="fa-regular fa-user" style="margin-bottom: 10px; margin-right: 10px"></i>
+            <i class="fa-regular fa-user" style="margin-bottom: 10px; margin-right: 5px"></i>
             <small style="margin-right: 30px"><h5>Hello, Guest!</h5></small>
             <a href="{% url 'login' %}"
                 ><button

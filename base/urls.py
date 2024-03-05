@@ -12,6 +12,7 @@ urlpatterns = [
     path("duplicateEvent/<str:pk>/", views.duplicateEvent, name="duplicate-event"),
     path("deleteEvent/<str:pk>/", views.deleteEvent, name="delete-event"),
     path("about/", views.aboutPage, name="about"),
+    path("help/", views.helpPage, name="help"),
     path("configuration/", views.configurationPage, name="configuration"),
     path("mirrorDisplay/<str:pk>/", views.mirrorDisplay, name="mirror-display"),
     path("location/", views.updateLocation, name="location"),

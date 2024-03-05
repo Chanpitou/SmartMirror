@@ -1,0 +1,48 @@
+{% extends 'main.html' %} {% block content %}
+<style>
+    .setup-container {
+        height: 100vh;
+        margin-inline: 10vw;
+        margin-block: 4vh;
+    }
+</style>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item active">Setup</li>
+</ol>
+
+<h1 style="text-align: center">Setup</h1>
+
+<div class="setup-container">
+    <div class="card border-primary mb-3" style="max-width: 150rem">
+        <div class="card-header"><h3 style="margin-block: 0">Mirror Setup</h3></div>
+        <div class="card-body">
+            <p class="card-text">Enter the followings information on your mirror...</p>
+            <p class="card-text"><strong>User id:</strong> {{user.id}}</p>
+            <p class="card-text"><strong>Username:</strong> {{user.username}}</p>
+            <p class="card-text"><strong>Secret Key:</strong> {{secretkey.secret_key}}</p>
+
+            <p class="card-text">(Image of an example here)...</p>
+        </div>
+        <hr />
+        <div class="card-header"><h3 style="margin-block: 0">Website Setup</h3></div>
+        <div class="card-body">
+            <p class="card-text">
+                <strong>Go to Configuration:</strong> Update the mirror design, update your location to get the local weather
+                information, update the news source/topic
+            </p>
+            <p class="card-text">(Image of an example here)...</p>
+            <p class="card-text"><strong>Go to Event:</strong> Create, update, duplicate, or delete your own events</p>
+            <p class="card-text">(Image of an example here)...</p>
+        </div>
+        <hr />
+        <div class="card-header"><h3 style="margin-block: 0">Contacts</h3></div>
+        <div class="card-body">
+            <p class="card-text"></p>
+            <p class="card-text">....</p>
+            <p class="card-text">....</p>
+            <p class="card-text">....</p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

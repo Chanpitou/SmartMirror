@@ -3,7 +3,14 @@
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
     <li class="breadcrumb-item active">Configuration</li>
 </ol>
-<div style="margin-left: 10px">
+<style>
+    configuration-container {
+        height: 300vh;
+        margin-inline: 10vw;
+        margin-block: 4vh;
+    }
+</style>
+<div class="configuration-container">
     <h1 style="text-align: center">Configuration</h1>
     <hr />
     <div class="card border-primary mb-3" style="max-width: 200rem; margin-inline: 20vh">
@@ -24,6 +31,20 @@
             </div>
             <div class="card-body" style="display: inline-block; margin: 0 auto">
                 <h4 class="text-center">Design View</h4>
+                {% if mirror_display == "Default" %}
+                <img
+                    style="
+                        max-width: 30vw;
+                        display: block;
+                        margin-bottom: 1.5vh;
+                        border: 10px solid #cdc8c8;
+                        border-radius: 8px;
+                        box-shadow: 10px 25px 30px rgba(30, 30, 200, 0.3);
+                    "
+                    src="{% static 'images/Limage1.jpg' %}"
+                />
+
+                {% elif mirror_display == "Display 2" %}
                 <img
                     style="
                         width: 30vw;
@@ -35,6 +56,55 @@
                     "
                     src="{% static 'images/smart.jpg' %}"
                 />
+                {% elif mirror_display == "Display 3" %}
+                <img
+                    style="
+                        width: 30vw;
+                        display: block;
+                        margin-bottom: 1.5vh;
+                        border: 10px solid #cdc8c8;
+                        border-radius: 8px;
+                        box-shadow: 10px 25px 30px rgba(30, 30, 200, 0.3);
+                    "
+                    src="{% static 'images/smart.jpg' %}"
+                />
+                {% elif mirror_display == "Display 4" %}
+                <img
+                    style="
+                        width: 30vw;
+                        display: block;
+                        margin-bottom: 1.5vh;
+                        border: 10px solid #cdc8c8;
+                        border-radius: 8px;
+                        box-shadow: 10px 25px 30px rgba(30, 30, 200, 0.3);
+                    "
+                    src="{% static 'images/smart.jpg' %}"
+                />
+                {% elif mirror_display == "Display 5" %}
+                <img
+                    style="
+                        width: 30vw;
+                        display: block;
+                        margin-bottom: 1.5vh;
+                        border: 10px solid #cdc8c8;
+                        border-radius: 8px;
+                        box-shadow: 10px 25px 30px rgba(30, 30, 200, 0.3);
+                    "
+                    src="{% static 'images/image1.jpg' %}"
+                />
+                {% else %}
+                <img
+                    style="
+                        width: 30vw;
+                        display: block;
+                        margin-bottom: 1.5vh;
+                        border: 10px solid #cdc8c8;
+                        border-radius: 8px;
+                        box-shadow: 10px 25px 30px rgba(30, 30, 200, 0.3);
+                    "
+                    src="{% static 'images/smart.jpg' %}"
+                />
+                {% endif %}
             </div>
         </div>
     </div>
@@ -60,10 +130,10 @@
 
             <div class="card-body">
                 <p><strong>Current Location:</strong> {{response.name}}</p>
-
+                <p><strong>Weather: </strong>{{weather.description}}</p>
+                <p><strong>Humidity: </strong>{{response.main.humidity}}%</p>
                 <p><strong>Temperature: </strong>{{response.main.temp}} K</p>
                 <p><strong>Feels Like: </strong>{{response.main.feels_like}} K</p>
-                <p><strong>Wind: </strong>{{wind}}</p>
             </div>
         </div>
     </div>

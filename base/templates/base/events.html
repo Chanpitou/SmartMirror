@@ -13,17 +13,23 @@
 <div>
     <div>
         <h1 style="text-align: center">Events</h1>
+        <div style="display: inline-block; margin-left: 10vw">
+            <a style="display: inline-block" href="{% url 'create-event' %}">
+                <button type="button" class="btn btn-outline-primary">
+                    <i class="fa-solid fa-plus"></i>
+                    Create Event
+                </button>
+            </a>
+        </div>
 
-        <a href="{% url 'create-event' %}">
-            <button type="button" class="btn btn-outline-primary" style="margin-left: 200px">
-                <i class="fa-solid fa-plus"></i>
-                Create Event
-            </button>
-        </a>
-        <hr />
-        <h5 style="margin-left: 200px">{{ events.count }} pending events, Do them!</h5>
-
-        {% for event in events %}
+        <p></p>
+        {% if not events %}
+        <div class="card border-primary mb-3" style="max-width: 150rem; margin-inline: 10vw">
+            <div style="height: 20vh; display: grid; place-items: center" class="card-body">
+                <h4 class="card-title">No upcoming events!</h4>
+            </div>
+        </div>
+        {% else %} {% for event in events %}
         <div class="card border-secondary mb-3" style="max-width: 200rem; margin-left: 200px; margin-right: 200px">
             <div class="card-header">
                 <div>
@@ -55,7 +61,7 @@
                 <div>{{event.description}}</div>
             </div>
         </div>
-        {% endfor %}
+        {% endfor %} {% endif %}
     </div>
 </div>
 

@@ -2,53 +2,55 @@
 <style>
     .container {
         margin-block: 0.5vh;
-        width: 23vw;
-
+        width: calc(20vw - 20px);
         overflow: hidden;
-        border: 10px solid #cdc8c8;
-        border-radius: 8px;
+        border: 0.5vw solid #cdc8c8;
+        border-radius: 2vh;
         box-shadow: 10px 25px 30px rgba(30, 30, 200, 0.3);
     }
+
     .wrapper {
-        width: 100%;
+        width: calc(100% + 20px);
         display: flex;
         animation: slide 15s infinite;
     }
+
     @keyframes slide {
         0% {
-            transform: translateX(0);
+            transform: translateX(-3%);
         }
         25% {
-            transform: translateX(0);
+            transform: translateX(-3%);
         }
         30% {
-            transform: translateX(-100%);
+            transform: translateX(-103%);
         }
         50% {
-            transform: translateX(-100%);
+            transform: translateX(-103%);
         }
         55% {
-            transform: translateX(-200%);
+            transform: translateX(-203%);
         }
         75% {
-            transform: translateX(-200%);
+            transform: translateX(-203%);
         }
         80% {
-            transform: translateX(-300%);
+            transform: translateX(-303%);
         }
         100% {
-            transform: translateX(-300%);
+            transform: translateX(-303%);
         }
     }
     img {
-        width: 100%;
+        width: calc(100% + 20px); /* Adjusted width to account for border */
+        margin-right: -20px; /* Compensate for negative margin introduced by container border */
     }
     .features {
         display: flex;
         justify-content: space-evenly;
     }
     .landing {
-        max-height: 60vh;
+        max-height: 55vh;
         background-image: url("{% static 'images/landing.jpg' %}");
         background-size: cover;
         background-repeat: no-repeat;
@@ -116,8 +118,8 @@
     <div style="max-width: 20%">
         <h5><i class="fa-solid fa-microphone-lines"></i><strong> Voice Control</strong></h5>
         <p>
-            Control your smart mirror hands-free with built-in voice recognition technology. Simply speak commands to check the
-            weather, play music, or control smart home devices.
+            Control your smart mirror hands-free with built-in voice recognition technology. Simply speak commands to turn mirror
+            on and off, or play some music.
         </p>
     </div>
     <div style="max-width: 20%">
@@ -128,4 +130,5 @@
         </p>
     </div>
 </div>
+
 {% endblock content %}

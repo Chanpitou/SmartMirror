@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Event, Weather, News, MirrorDisplay
+from .models import Event, Weather, News, MirrorDisplay, SecretKey
 from .forms import (
     EventForm,
     UserForm,
@@ -15,6 +15,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
+import secrets, string, time
 import requests
 
 
@@ -56,10 +57,24 @@ def logoutUser(request):
     return redirect("home")
 
 
+# generating unique secret key for each user
+def generate_random_code(min_length=12, max_length=16):
+    # Define the pool of characters to choose from
+    characters = string.ascii_letters + string.digits
+
+    # Generate a random length between min_length and max_length
+    length = secrets.choice(range(min_length, max_length + 1))
+
+    # Generate the random code
+    random_code = "".join(secrets.choice(characters) for _ in range(length))
+
+    return random_code
+
+
 # Register user
 def registerPage(request):
     form = RegisterForm()
-
+    secretKey = generate_random_code()
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -73,6 +88,10 @@ def registerPage(request):
             user_location.save()
             user_news, created = News.objects.get_or_create(user=user)
             user_news.save()
+            user_key, created = SecretKey.objects.get_or_create(
+                user=user, secret_key=secretKey
+            )
+            user_key.save()
             return redirect("home")
         else:
             messages.error(request, "An error occured during registeration.")
@@ -90,6 +109,17 @@ def index(request):
 # navbar -- about page
 def aboutPage(request):
     return render(request, "base/about.html")
+
+
+# navbar -- info page
+login_required(login_url="login")
+
+
+def helpPage(request):
+    user = request.user
+    secretkey = SecretKey.objects.get(user=user)
+    context = {"user": user, "secretkey": secretkey}
+    return render(request, "base/help.html", context)
 
 
 # Go to location page to update the current location
@@ -198,7 +228,7 @@ def configurationPage(request):
     try:
         url = WEATHER_URL + "appid=" + Weather_API_KEY + "&q=" + CITY
         response = requests.get(url).json()
-        wind = response["wind"]
+        weather = response["weather"][0]
     except:
         messages.error(request, "City not found, please check/update again.")
 
@@ -212,7 +242,7 @@ def configurationPage(request):
 
     context = {
         "response": response,
-        "wind": wind,
+        "weather": weather,
         "news_source": news_source,
         "news_topic": news_topic,
         "mirror_display": mirror_display,
@@ -226,7 +256,8 @@ def configurationPage(request):
 def event(request, pk):
     user = User.objects.get(id=pk)
     events = user.event_set.all()
-    context = {"events": events}
+    dark = "dark"
+    context = {"events": events, "dark": dark}
     return render(request, "base/events.html", context)
 
 

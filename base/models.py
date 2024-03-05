@@ -80,3 +80,14 @@ class MirrorDisplay(models.Model):
 
     def __str__(self):
         return f"{self.user.username}: {self.display}"
+
+
+# Model for user secret key
+class SecretKey(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    secret_key = models.CharField(max_length=50)
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user}: {self.secret_key}"
