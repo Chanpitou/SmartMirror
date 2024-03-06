@@ -107,19 +107,9 @@ def index(request):
 
 
 # navbar -- about page
+@login_required(login_url="login")
 def aboutPage(request):
     return render(request, "base/about.html")
-
-
-# navbar -- info page
-login_required(login_url="login")
-
-
-def helpPage(request):
-    user = request.user
-    secretkey = SecretKey.objects.get(user=user)
-    context = {"user": user, "secretkey": secretkey}
-    return render(request, "base/help.html", context)
 
 
 # Go to location page to update the current location
@@ -143,8 +133,16 @@ def updateLocation(request):
     return render(request, "base/location.html", context)
 
 
+# navbar -- setup page
+@login_required(login_url="login")
+def setupPage(request):
+    user = request.user
+    secretkey = SecretKey.objects.get(user=user)
+    context = {"user": user, "secretkey": secretkey}
+    return render(request, "base/setup.html", context)
+
+
 # Go to News page to change the source or topic
-login_required(login_url="login")
 
 
 def updateNews(request):
@@ -179,9 +177,6 @@ def updateNews(request):
 
 
 # Mirror Display choices
-login_required(login_url="login")
-
-
 def mirrorDisplay(request, pk):
     displays = [
         "Default",
