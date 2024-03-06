@@ -23,7 +23,7 @@ import requests
 
 
 # Create User login
-@requires_csrf_token
+@csrf_exempt
 def loginPage(request):
     page = "login"
 
@@ -56,7 +56,7 @@ def loginPage(request):
 
 
 # Create logout user
-@requires_csrf_token
+@csrf_exempt
 def logoutUser(request):
     logout(request)
     return redirect("home")
@@ -77,7 +77,7 @@ def generate_random_code(min_length=12, max_length=16):
 
 
 # Register user
-@requires_csrf_token
+@csrf_exempt
 def registerPage(request):
     form = RegisterForm()
     secretKey = generate_random_code()
@@ -119,6 +119,7 @@ def aboutPage(request):
 
 
 # Go to location page to update the current location
+@csrf_exempt
 def updateLocation(request):
     user = request.user
     user_weather = Weather.objects.get(user=user)
@@ -151,7 +152,7 @@ def setupPage(request):
 # Go to News page to change the source or topic
 
 
-@requires_csrf_token
+@csrf_exempt
 def updateNews(request):
     news_sources = [
         "BBC",
@@ -184,7 +185,7 @@ def updateNews(request):
 
 
 # Mirror Display choices
-@requires_csrf_token
+@csrf_exempt
 def mirrorDisplay(request, pk):
     displays = [
         "Default",
@@ -214,7 +215,7 @@ def mirrorDisplay(request, pk):
 # restrict user if not authenticated
 @login_required(login_url="login")
 # Mirror configuration
-@requires_csrf_token
+@csrf_exempt
 def configurationPage(request):
     # Weather Section
     response = ""
@@ -257,7 +258,7 @@ def configurationPage(request):
 # restrict user if not authenticated
 @login_required(login_url="login")
 # Rendering all task to the task page
-@requires_csrf_token
+@csrf_exempt
 def event(request, pk):
     user = User.objects.get(id=pk)
     events = user.event_set.all()
@@ -269,7 +270,7 @@ def event(request, pk):
 # restrict user if not authenticated
 @login_required(login_url="login")
 # Creating new events
-@requires_csrf_token
+@csrf_exempt
 def createEvent(request):
     page = "create"
     form = EventForm()
@@ -305,7 +306,7 @@ def createEvent(request):
 # restrict user if not authenticated
 @login_required(login_url="login")
 # Creating new events
-@requires_csrf_token
+@csrf_exempt
 def updateEvent(request, pk):
     page = "update"
 
@@ -340,11 +341,11 @@ def updateEvent(request, pk):
     return render(request, "base/create_event.html", context)
 
 
-login_required(login_url="login")
+@login_required(login_url="login")
 
 
 # duplicate event
-@requires_csrf_token
+@csrf_exempt
 def duplicateEvent(request, pk):
     page = "duplicate"
 
@@ -391,7 +392,7 @@ def duplicateEvent(request, pk):
 # restrict user if not authenticated
 @login_required(login_url="login")
 # deleting event
-@requires_csrf_token
+@csrf_exempt
 def deleteEvent(request, pk):
     event = Event.objects.get(id=pk)
     if request.method == "POST":
