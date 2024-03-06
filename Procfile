@@ -1,0 +1,1 @@
+web: gunicorn smartmirror.wsgi --log-file -
