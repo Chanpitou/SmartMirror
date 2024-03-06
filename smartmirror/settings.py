@@ -15,7 +15,11 @@ SECRET_KEY = settings.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "http://127.0.0.1/",
+    "smartmirror-production.up.railway.app",
+]
 
 
 # Application definition
