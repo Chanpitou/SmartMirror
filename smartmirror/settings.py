@@ -1,5 +1,4 @@
 from pathlib import Path
-from .config import Settings
 import os
 from decouple import config
 
