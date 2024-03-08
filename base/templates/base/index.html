@@ -62,8 +62,10 @@
 <div class="landing">
     <div style="display: grid; grid-template-columns: 2fr 3fr">
         <div style="margin-left: 20%">
-            <div style="margin-top: 12%">
-                <h1><strong>Welcome to Smart Mirror</strong></h1>
+            <!-- If logged in, showed this -->
+            {% if request.user.is_authenticated %}
+            <div style="margin-top: 5%">
+                <h2><strong>Welcome to Smart Mirror</strong></h2>
             </div>
             <div class="text-align">
                 <p>
@@ -72,15 +74,13 @@
                     a unique blend of functionality and style.
                 </p>
             </div>
-            <!-- If logged in, showed this -->
-            {% if request.user.is_authenticated %}
             <div style="margin-top: 3vh">
-                <p style="margin-bottom: 4px">To set up and personalize your own mirror:</p>
+                <p style="margin-bottom: 0.2vh">To set up and personalize your own mirror:</p>
                 <a href="{% url 'configuration' %}">
-                    <button type="button" class="btn btn-outline-info">Go to Configuration</button>
+                    <button type="button" class="btn btn-outline-info" style="margin-bottom: 1.8vh">Go to Configuration</button>
                 </a>
-                <hr />
-                <p style="margin-bottom: 4px">To create, update, or delete your events:</p>
+
+                <p style="margin-bottom: 0.2vh; margin-top: 0">To create, update, or delete your events:</p>
                 <a href="{% url 'events' request.user.id%}">
                     <button type="button" class="btn btn-outline-info">Got to Events</button>
                 </a>
@@ -88,9 +88,19 @@
 
             <!-- if not logged in, showed this -->
             {% else %}
+            <div style="margin-top: 10%">
+                <h2><strong>Welcome to Smart Mirror</strong></h2>
+            </div>
+            <div class="text-align">
+                <p>
+                    Welcome to the future of home technology! Smart Mirror is an innovative project aimed at revolutionizing your
+                    daily routine through the power of technology. Our smart mirror seamlessly integrates into your home, offering
+                    a unique blend of functionality and style.
+                </p>
+            </div>
             <div>
                 <a href="{% url 'login' %}">
-                    <button type="button" class="btn btn-outline-success">Get Started</button>
+                    <button type="button" class="btn btn-outline-success"><small>Get Started</small></button>
                 </a>
             </div>
             {% endif %}
@@ -105,25 +115,25 @@
         </div>
     </div>
 </div>
-<div class="text-center" style="margin-inline-start: 3%; margin-inline-end: 3%; margin-top: 30px"><h3>Features</h3></div>
+<div class="text-center" style="margin-inline-start: 3%; margin-inline-end: 3%; margin-top: 30px"><h4>Features</h4></div>
 <div class="features" style="margin-inline-start: 3%; margin-inline-end: 3%; margin-top: 40px">
     <div style="max-width: 20%">
-        <h5><i class="fa-solid fa-circle-user"></i><strong> Personalized Information</strong></h5>
+        <h6><i class="fa-solid fa-circle-user"></i><strong> Personalized Information</strong></h6>
         <p>Our smart mirror display tailored information such as weather updates, calendar events, and news headlines.</p>
     </div>
     <div style="max-width: 20%">
-        <h5><i class="fa-solid fa-display"></i><strong> Customizable Interface</strong></h5>
+        <h6><i class="fa-solid fa-display"></i><strong> Customizable Interface</strong></h6>
         <p>Easily customize your mirror's layout, widgets, and themes to match your unique style and preferences.</p>
     </div>
     <div style="max-width: 20%">
-        <h5><i class="fa-solid fa-microphone-lines"></i><strong> Voice Control</strong></h5>
+        <h6><i class="fa-solid fa-microphone-lines"></i><strong> Voice Control</strong></h6>
         <p>
             Control your smart mirror hands-free with built-in voice recognition technology. Simply speak commands to turn mirror
             on and off, or play some music.
         </p>
     </div>
     <div style="max-width: 20%">
-        <h5><i class="fa-regular fa-lightbulb"></i> <strong> Motion Sensor</strong></h5>
+        <h6><i class="fa-regular fa-lightbulb"></i> <strong> Motion Sensor</strong></h6>
         <p>
             The integrated motion sensor detects your presence, activating the mirror's display when you approach and conserving
             energy when not in use.

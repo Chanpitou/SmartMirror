@@ -113,7 +113,6 @@ def index(request):
 
 
 # navbar -- about page
-@login_required(login_url="login")
 def aboutPage(request):
     return render(request, "base/about.html")
 
@@ -212,6 +211,12 @@ def mirrorDisplay(request, pk):
     return render(request, "base/mirror_display.html", context)
 
 
+# Converting Kelvin to F
+def kelvin_temp(kelvin: int):
+    f_temp = (kelvin - 273.15) * 9 / 5 + 32
+    return round(f_temp, 2)
+
+
 # restrict user if not authenticated
 @login_required(login_url="login")
 # Mirror configuration
@@ -219,7 +224,7 @@ def mirrorDisplay(request, pk):
 def configurationPage(request):
     # Weather Section
     response = ""
-    wind = ""
+
     CITY = ""
     user = request.user
     user_display = MirrorDisplay.objects.get(user=user)
@@ -234,6 +239,11 @@ def configurationPage(request):
         url = WEATHER_URL + "appid=" + Weather_API_KEY + "&q=" + CITY
         response = requests.get(url).json()
         weather = response["weather"][0]
+        main = response["main"]
+        k_temp = main["temp"]
+        k_fl_temp = main["feels_like"]
+        f_temp = kelvin_temp(int(k_temp))
+        fl_temp = kelvin_temp(int(k_fl_temp))
     except:
         messages.error(request, "City not found, please check/update again.")
 
@@ -251,6 +261,8 @@ def configurationPage(request):
         "news_source": news_source,
         "news_topic": news_topic,
         "mirror_display": mirror_display,
+        "f_temp": f_temp,
+        "fl_temp": fl_temp,
     }
     return render(request, "base/configuration.html", context)
 

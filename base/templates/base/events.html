@@ -4,15 +4,9 @@
     <li class="breadcrumb-item active">Events</li>
 </ol>
 
-<style>
-    .task-container {
-        display: grid;
-        grid-template-columns: 5fr 1fr;
-    }
-</style>
 <div>
     <div>
-        <h1 style="text-align: center">Events</h1>
+        <h2 style="text-align: center">Events</h2>
         <div style="display: inline-block; margin-left: 10vw">
             <a style="display: inline-block" href="{% url 'create-event' %}">
                 <button type="button" class="btn btn-outline-primary">
@@ -30,7 +24,7 @@
             </div>
         </div>
         {% else %} {% for event in events %}
-        <div class="card border-secondary mb-3" style="max-width: 200rem; margin-left: 200px; margin-right: 200px">
+        <div class="card border-secondary mb-3" style="max-width: 200rem; margin-inline: 10vw">
             <div class="card-header">
                 <div>
                     <a href="{% url 'update-event' event.id%}">
@@ -44,7 +38,7 @@
                     </a>
                 </div>
             </div>
-            <div class="card-body" style="display: grid; grid-template-columns: 1fr 4fr">
+            <div class="card-body" style="display: grid; grid-template-columns: 2fr 7fr">
                 <div>
                     <h4 class="card-title">{{ event.topic }}</h4>
                     <h6>{{ event.event_date|date }}</h6>

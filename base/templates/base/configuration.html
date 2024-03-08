@@ -11,7 +11,7 @@
     }
 </style>
 <div class="configuration-container">
-    <h1 style="text-align: center">Configuration</h1>
+    <h2 style="text-align: center">Configuration</h2>
     <hr />
     <div class="card border-primary mb-3" style="max-width: 200rem; margin-inline: 20vh">
         <div class="card-header"><h3 style="margin-top: 10px">Mirror View</h3></div>
@@ -30,7 +30,6 @@
                 </a>
             </div>
             <div class="card-body" style="display: inline-block; margin: 0 auto">
-                <h4 class="text-center">Design View</h4>
                 {% if mirror_display == "Default" %}
                 <img
                     style="
@@ -41,7 +40,7 @@
                         border-radius: 8px;
                         box-shadow: 10px 25px 30px rgba(30, 30, 200, 0.3);
                     "
-                    src="{% static 'images/Limage1.jpg' %}"
+                    src="{% static 'images/smart.jpg' %}"
                 />
 
                 {% elif mirror_display == "Display 2" %}
@@ -54,7 +53,7 @@
                         border-radius: 8px;
                         box-shadow: 10px 25px 30px rgba(30, 30, 200, 0.3);
                     "
-                    src="{% static 'images/smart.jpg' %}"
+                    src="{% static 'images/Limage1.jpg' %}"
                 />
                 {% elif mirror_display == "Display 3" %}
                 <img
@@ -66,7 +65,7 @@
                         border-radius: 8px;
                         box-shadow: 10px 25px 30px rgba(30, 30, 200, 0.3);
                     "
-                    src="{% static 'images/smart.jpg' %}"
+                    src="{% static 'images/Limage2.jpg' %}"
                 />
                 {% elif mirror_display == "Display 4" %}
                 <img
@@ -78,7 +77,7 @@
                         border-radius: 8px;
                         box-shadow: 10px 25px 30px rgba(30, 30, 200, 0.3);
                     "
-                    src="{% static 'images/smart.jpg' %}"
+                    src="{% static 'images/Limage3.jpg' %}"
                 />
                 {% elif mirror_display == "Display 5" %}
                 <img
@@ -90,7 +89,7 @@
                         border-radius: 8px;
                         box-shadow: 10px 25px 30px rgba(30, 30, 200, 0.3);
                     "
-                    src="{% static 'images/image1.jpg' %}"
+                    src="{% static 'images/Limage4.jpg' %}"
                 />
                 {% else %}
                 <img
@@ -102,7 +101,7 @@
                         border-radius: 8px;
                         box-shadow: 10px 25px 30px rgba(30, 30, 200, 0.3);
                     "
-                    src="{% static 'images/smart.jpg' %}"
+                    src="{% static 'images/image10.png' %}"
                 />
                 {% endif %}
             </div>
@@ -132,8 +131,8 @@
                 <p><strong>Current Location:</strong> {{response.name}}</p>
                 <p><strong>Weather: </strong>{{weather.description}}</p>
                 <p><strong>Humidity: </strong>{{response.main.humidity}}%</p>
-                <p><strong>Temperature: </strong>{{response.main.temp}} K</p>
-                <p><strong>Feels Like: </strong>{{response.main.feels_like}} K</p>
+                <p><strong>Temperature: </strong>{{f_temp}} F</p>
+                <p><strong>Feels Like: </strong>{{fl_temp}} F</p>
             </div>
         </div>
     </div>
